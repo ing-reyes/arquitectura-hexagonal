@@ -14,7 +14,7 @@ export class FindAllUserUseCase implements UseCase {
         const response = await this.userRepositoryPort.findAll( paginationDto ); 
         return {
             ...response,
-            data: response.data.map((user)=>user.mapToPrimitive()),
+            data: response.data.map((user) => UserPrimitiveResponse.fromDomain(user)),
         }
     }
 }

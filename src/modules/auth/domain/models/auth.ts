@@ -1,11 +1,12 @@
 import { AuthEmail } from "./value-objects/auth-email";
+import { AuthId } from "./value-objects/auth-id";
 import { AuthName } from "./value-objects/auth-name";
 import { AuthPassword } from "./value-objects/auth-password";
 import { AuthRoles } from "./value-objects/auth-roles";
 
 export class Auth {
     constructor(
-        public id: AuthName,
+        public id: AuthId,
         public name: AuthName,
         public email: AuthEmail,
         public password: AuthPassword,

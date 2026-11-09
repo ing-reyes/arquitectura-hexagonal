@@ -9,6 +9,7 @@ import { MongoUserMapper } from './mongo-user.mapper';
 import { Model } from 'mongoose';
 import { CreateUserCommand } from '../../../../../domain/models/commands/create-user.command';
 import { UpdateUserCommand } from '../../../../../domain/models/commands/update-user.command';
+import { UserEmail } from '../../../../../domain/models/value-objects/user-email';
 import { UserId } from '../../../../../domain/models/value-objects/user-id';
 
 export class MongoUserRepository implements UserRepositoryPort {
@@ -63,6 +64,23 @@ export class MongoUserRepository implements UserRepositoryPort {
     async findOne(id: UserId): Promise<ApiOneResponse<User | null>> {
         try {
             const user = await this.userModel.findById(id.value);
+
+            return {
+                status: {
+                    statusCode: HttpStatus.OK,
+                    statusMsg: 'OK',
+                    error: null
+                },
+                data: (user) ? this.mapper.toDomain(user) : null,
+            };
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    async findOneByEmail(email: UserEmail): Promise<ApiOneResponse<User | null>> {
+        try {
+            const user = await this.userModel.findOne({ email: email.value });
 
             return {
                 status: {

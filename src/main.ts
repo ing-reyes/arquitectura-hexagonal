@@ -3,9 +3,9 @@ import { mongodb, server } from "./container";
 
 (async () => {
     try {
-        // //* Run Database
-        // await mongodb.connect();
-        
+        //* Run Database
+        await mongodb.connect();
+
         //* Run Server
         server.start(envs.PORT);
     } catch (error) {

@@ -23,6 +23,7 @@ export class InMemoryAuthRepository implements AuthRepositoryPort {
         try {
             const user = await this.inMemoryUserRepository.findOneByEmail(command.email);
             if (!user.data) throw ManagerError.badRequest('User not found');
+            if (command.password.value !== user.data.password.value) throw ManagerError.badRequest('Invalid credentials');
             return {
                 status: {
                     statusCode: HttpStatus.OK,

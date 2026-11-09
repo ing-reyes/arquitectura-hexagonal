@@ -12,10 +12,10 @@ export class FindOneUserUseCase implements UseCase {
 
     async execute(id: string): Promise<ApiOneResponse<UserPrimitiveResponse | null>> {
         const userId = new UserId(id);
-        const response = await this.userRepositoryPort.findOne( userId );
+        const response = await this.userRepositoryPort.findOne(userId);
         return {
             ...response,
-            data: response.data?.mapToPrimitive() ?? null,
+            data: response.data ? UserPrimitiveResponse.fromDomain(response.data) : null,
         }
     }
 }
